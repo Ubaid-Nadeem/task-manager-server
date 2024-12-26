@@ -14,8 +14,10 @@ async function authenticatedUser(req, res, next) {
 
   try {
     let decoded = jwt.verify(token, process.env.AUTH_SECRET);
+    console.log(decoded);
+    
     if (decoded) {
-      const user = await User.findById(decoded._id);
+      const user = await User.findById(decoded.user._id);
       if (user) {
         req.user = user;
         next();

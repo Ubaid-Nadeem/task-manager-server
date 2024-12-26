@@ -2,10 +2,13 @@ import express from "express";
 import User from "../models/User.js";
 import Task from "../models/task.js";
 import authenticatedUser from "../middlewares/authenticatedUser.js";
+import main from "../nodemailer/index.js";
+
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   const tasks = await Task.find({ createdBy: req.user._id });
+
   res.status(200).json({
     data: { tasks, user: req.user },
     error: false,
@@ -14,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
+ 
   let newTask = new Task({
     task: req.body.task,
     createdBy: req.user._id,
@@ -31,7 +34,6 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     let task = await Task.findByIdAndDelete({ _id: req.params.id });
-    console.log(task);
     res.send({ task });
   } catch (e) {
     console.log(e);
@@ -39,4 +41,17 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+ 
+  try {
+    let updatedTask = await Task.updateOne(
+      { _id: req.params.id },
+      { task: req.body.task, isComplete: req.body.isComplete }
+    );
+    res.status(200).json(updatedTask);
+  } catch (e) {
+    res.status(400).json(e);
+    console.log(e);
+  }
+});
 export default router;
