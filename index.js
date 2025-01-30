@@ -28,6 +28,6 @@ app.get("/", (req, res) => {
   console.log("hello world");
 });
 
-app.listen(process.env.PORT, () =>
+app.listen(process.env.PORT || 4000, () =>
   console.log(`Server is running on PORT ${process.env.PORT}`)
 );

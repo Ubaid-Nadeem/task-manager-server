@@ -1,8 +1,5 @@
 import express from "express";
-import User from "../models/User.js";
-import Task from "../models/task.js";
-import authenticatedUser from "../middlewares/authenticatedUser.js";
-import main from "../nodemailer/index.js";
+import Task from "../models/Task.js";
 
 const router = express.Router();
 
