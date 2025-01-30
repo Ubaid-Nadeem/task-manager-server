@@ -21,7 +21,6 @@ const loginSchema = Joi.object({
 });
 
 router.post("/getuser", async (req, res) => {
-  
   try {
     let user = await User.findOne({ email: req.body.email.email });
     res.status(200).json({ data: user, error: false, msg: "user found" });
@@ -93,7 +92,9 @@ router.post("/login", async (req, res) => {
       .json({ error: true, data: null, msg: error.message });
 
   let user = await User.findOne({ email: value.email }).lean();
+
   if (user) {
+    
     const isPasswordValid = await bcrypt.compare(value.password, user.password);
 
     if (!isPasswordValid)

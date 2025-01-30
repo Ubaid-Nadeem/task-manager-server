@@ -9,12 +9,16 @@ const transporter = nodemailer.createTransport({
 });
 
 export default async function mailVerification(name, email, link) {
-  
-    let mailOptions = {
+  let mailOptions = {
     from: "ubaidmuhammad916@gmail.com",
     to: `${email}`,
     subject: "Verification Email",
-    text: `Task Manager \n \n Hello, ${name} \n \n \n \n CLick the link to be given below, Thank you! \n \n ${link}`,
+    html: `<div> 
+     <h1> Task Manager </h1> 
+     <h2> Hello, ${name} </h2>
+     <p> CLick the link to be given below, Thank you!</p>
+     <a  href=${link}>Verify your email </a>
+     </div>  `,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -25,4 +29,3 @@ export default async function mailVerification(name, email, link) {
     }
   });
 }
-
