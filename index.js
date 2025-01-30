@@ -16,8 +16,8 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.use(express.json());
 app.use(cors("*"));
+app.use(express.json());
 
 app.use("/user", userRoutes);
 app.use("/task", authenticatedUser, todoRoutes);
@@ -25,7 +25,7 @@ app.use("/verify", verifyRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
-  console.log("hello world")
+  console.log("hello world");
 });
 
 app.listen(process.env.PORT, () =>
